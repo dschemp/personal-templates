@@ -29,15 +29,6 @@ OUT_WHO="$( who )"
 LOG_IP="$PAM_RHOST"
 LOG_HOST="$(cat /etc/hostname)"
 
-MESSAGE="### :lock: New Login detected :male_detective:
-
-**Host:** $(cat /etc/hostname)
-**User:** ${LOG_USER}
-**IP:** ${LOG_IP}
-**Service:** ${PAM_SERVICE}
-**Date:** ${LOG_DATE}
-**Uptime:** $(uptime -p)"
-
 JSON_STRING=$( jq -n \
   --arg username "$INTEGRATION_USERNAME" \
   --arg channel "$INTEGRATION_CHANNEL" \
