@@ -1,0 +1,16 @@
+# Inspired by ArchLinux/infrastructure
+
+warn_list:
+  # shell module using pipes might not fail but not end play
+  - risky-shell-pipe
+  - no-changed-when
+
+skip_list:
+  # role names not conforming to regex pattern
+  - role-name
+  # unspecified file permissions
+  - risky-file-permissions
+  # line too long (x > 80 characters) (line-length)
+  - line-length
+  # do not recommend running tasks as handlers
+  - no-handler
