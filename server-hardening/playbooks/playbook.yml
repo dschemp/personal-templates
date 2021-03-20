@@ -1,0 +1,4 @@
+---
+- name: Setup host
+  hosts: all
+  remote_user: root

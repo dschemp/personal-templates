@@ -1,0 +1,12 @@
+---
+- name: Prepare servers
+  hosts: all
+  remote_user: root
+  roles:
+    - { role: common }
+    - { role: tools }
+    - { role: sshd }
+    - { role: root_ssh }
+    - { role: sudo }
+    - { role: fail2ban }
+    - { role: fail2ban_endlessh }

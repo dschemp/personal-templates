@@ -1,0 +1,44 @@
+---
+- hosts: all
+  become: yes
+  tasks:
+    - name: Update packages
+      apt:
+        update_cache: true
+        autoclean: true
+
+    - name: Uninstall specific packages
+      apt:
+        name:
+          - snapd
+          - unattended-upgrades
+          - cloud-init
+          - policykit-1
+          - accountsservice
+          - multipathd
+        state: absent
+        purge: true
+
+    - name: Disable certain services
+      service:
+        name: "{{ item }}"
+        enabled: false
+      loop:
+        - systemd-networkd-wait-online
+    
+    - name: Autoremove packages
+      apt:
+        autoremove: true
+
+    - name: Upgrade packages
+      apt:
+        name: "*"
+        state: latest
+    
+    - name: Remove login motd
+      file:
+        path: /etc/update-motd.d/
+        state: absent
+
+    - name: Reboot system
+      reboot:
