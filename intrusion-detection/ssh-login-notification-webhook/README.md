@@ -5,6 +5,8 @@ Based on the Telegram notification script from MikeWent (github.com/MikeWent/not
 ## Requirements
 - an "Incoming Webhooks" url (from Mattermost, Discord, ...)
 - `httpie`
+- `gawk`
+- `whois`
 - `jq` (for the Mattermost version)
 
 ## Setup (normal)
