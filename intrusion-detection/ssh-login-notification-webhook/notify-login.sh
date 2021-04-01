@@ -16,11 +16,17 @@ LOG_DATE="$( date "+%Y-%m-%d %H:%M:%S" )"
 OUT_WHO="$( who )"
 LOG_IP="$PAM_RHOST"
 
+WHOIS_INFO=`whois -h whois.cymru.com " -f -t -n $LOG_IP"`
+AS_NUMBER=`echo "$WHOIS_INFO" | awk -F "|" '{gsub (/ /, ""); print $1}'`
+AS_NAME=`echo "$WHOIS_INFO" | awk -F "|" '{gsub (/ /, ""); print $3}'`
+
+IP_INFO="$LOG_IP (AS$AS_NUMBER / $AS_NAME)"
+
 MESSAGE="### :lock: New Login detected :male_detective:
 
 **Host:** $(cat /etc/hostname)
 **User:** ${LOG_USER}
-**IP:** ${LOG_IP}
+**IP:** ${IP_INFO}
 **Service:** ${PAM_SERVICE}
 **Date:** ${LOG_DATE}
 **Uptime:** $(uptime -p)"
