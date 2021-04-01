@@ -29,6 +29,12 @@ OUT_WHO="$( who )"
 LOG_IP="$PAM_RHOST"
 LOG_HOST="$(cat /etc/hostname)"
 
+WHOIS_INFO=`whois -h whois.cymru.com " -f -t -n $LOG_IP"`
+AS_NUMBER=`echo "$WHOIS_INFO" | awk -F "|" '{gsub (/ /, ""); print $1}'`
+AS_NAME=`echo "$WHOIS_INFO" | awk -F "|" '{gsub (/ /, ""); print $3}'`
+
+IP_INFO="$LOG_IP (AS$AS_NUMBER / $AS_NAME)"
+
 JSON_STRING=$( jq -n \
   --arg username "$INTEGRATION_USERNAME" \
   --arg channel "$INTEGRATION_CHANNEL" \
@@ -36,7 +42,7 @@ JSON_STRING=$( jq -n \
   --arg text "$INTEGRATION_TEXT" \
   --arg host "$LOG_HOST" \
   --arg user "$LOG_USER" \
-  --arg ip "$LOG_IP" \
+  --arg ip "$IP_INFO" \
   --arg service "$PAM_SERVICE" \
   --arg timestamp "$LOG_DATE" \
     '{
